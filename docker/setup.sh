@@ -8,7 +8,7 @@ git clone git@github.com:NCI-GDC/gdcapi.git /var/deploy/gdcapi
 
 if [ -f /deploy-cache/virtual-envs/signpost/bin/activate ]; then
   mkdir -p /deploy-cache/virtual-envs/signpost
-  virtualenv /deploy-cache/signpost
+  virtualenv /deploy-cache/virtual-envs/signpost
 
 fi
 echo "installing signpost"
