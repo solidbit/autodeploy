@@ -59,3 +59,5 @@ typings/
 
 sshkey
 sshkey.pub
+
+deploy-caches
