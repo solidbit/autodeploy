@@ -6,6 +6,11 @@ docker exec -d python mkdir -p /root/.ssh
 # mounting this via `mount` command instead
 # docker exec -d python mkdir -p /deploy-cache
 
+if [ ! -f ./sshkey ]; then
+  echo "no sshkey file found. Please put a private key with access to the repos at ./sshkey"
+  exit 1;
+fi
+
 echo 'copying private key'
 docker cp sshkey python:/root/.ssh/id_rsa
 
