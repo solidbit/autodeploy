@@ -5,36 +5,6 @@ const privateKey = fs.readFileSync(__dirname + '/sshkey', 'utf8');
 const setupScript = fs.readFileSync(__dirname + '/setup.sh', 'utf8');
 const runScript = fs.readFileSync(__dirname + '/run.sh', 'utf8');
 
-const child_process = require('child_process');
-const spawn = child_process.spawn;
-const debug = require('debug')('autodeploy:src/setupContainer.js');
-
-function execContainer(containerId, cmd, input) {
-  return new Promise((resolve, reject) => {
-    var cp = spawn('docker', ['exec', '-i', containerId].concat(cmd));
-    var chunks = [];
-    cp.stdout.on('data', function(chunk) {
-      chunks.push(chunk);
-    });
-
-    cp.on('error', function(error) {
-      console.log(error);
-      reject(error);
-    });
-    cp.on('exit', function(code, signal) {
-      debug('execContainer code: %s signal: %s', code, signal);
-      code
-        ? reject('Failed with status ' + code)
-        : console.log(Buffer.concat(chunks).toString('utf8')) ||
-          resolve(Buffer.concat(chunks));
-    });
-
-    cp.stderr.pipe(process.stderr);
-
-    if (input) input.pipe(cp.stdin).on('error', reject);
-  });
-}
-
 const execPromise = (container, execOptions) =>
   new Promise((resolve, reject) => {
     container.exec(
