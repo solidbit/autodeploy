@@ -1,4 +1,5 @@
 #!/bin/bash
+
 test -z "$DEBUG" || set -x
 
 mkdir -p /var/deploy

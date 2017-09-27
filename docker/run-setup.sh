@@ -1,5 +1,3 @@
-# docker run -it python:2.7.14 /bin/bash
-
 echo 'creating ssh directory'
 docker exec -d python mkdir -p /root/.ssh
 
