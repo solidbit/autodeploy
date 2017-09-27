@@ -8,15 +8,23 @@ const docker = new Docker();
 portfinder.basePort = 30000;
 
 const DEPLOY_CACHE_ROOT = './deploy-caches/';
-const projectName = 'gdcapi';
-const cachePath = filenamify.path(`${DEPLOY_CACHE_ROOT}${projectName}`);
 
-const runContainer = async ({ image, port, name }) => {
+const getContainer = async ({ image, port, containerName, projectName }) => {
+  const cachePath = filenamify.path(`${DEPLOY_CACHE_ROOT}${projectName}`);
+  const containers = await docker.listContainers();
+  const runningContainer = containers.find(container =>
+    container.Names.includes(`/${containerName}`),
+  );
+
+  if (runningContainer.State === 'running') {
+    return docker.getContainer(runningContainer.Id);
+  }
+
   mkdirp.sync(cachePath);
   const hostPort = await portfinder.getPortPromise();
   const container = await docker.createContainer({
     Image: image,
-    name: name,
+    name: containerName,
     AttachStdin: false,
     AttachStdout: true,
     AttachStderr: true,
@@ -24,17 +32,14 @@ const runContainer = async ({ image, port, name }) => {
     Cmd: ['/bin/bash'],
     HostConfig: {
       Binds: [`${cachePath}:/deploy-cache`],
+      PortBindings: {
+        [`${port}/tcp`]: [{ HostPort: hostPort.toString() }],
+      },
     },
     ExposedPorts: { [`${port}/tcp`]: {} },
-    PortBindings: {
-      [`${port}/tcp`]: [{ HostPort: hostPort.toString() }],
-    },
   });
-
   await container.start();
+  return container;
 };
 
-const branchName = '1655-tar-stream-rest';
-const containerName = `${branchName}-${projectName}`;
-
-runContainer({ image: 'python:2.7.14', port: '5000', name: containerName });
+module.exports = getContainer;
