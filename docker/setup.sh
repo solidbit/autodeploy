@@ -8,7 +8,7 @@ ssh-keyscan github.com >> /root/.ssh/known_hosts
 echo "cloning git repos"
 
 git clone git@github.com:NCI-GDC/signpost.git /var/deploy/signpost
-git clone git@github.com:NCI-GDC/gdcapi.git -b $BRANCH /var/deploy/gdcapi
+git clone git@github.com:cheapsteak/gdcapi.git -b $BRANCH /var/deploy/gdcapi
 
 if [ ! -f /deploy-cache/virtual-envs/signpost/bin/activate ]; then
   echo "creating virtualenv for signpost"
