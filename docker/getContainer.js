@@ -13,8 +13,7 @@ const getContainer = async ({ image, port, containerName, projectName }) => {
   const cachePath = filenamify.path(`${DEPLOY_CACHE_ROOT}${projectName}`);
 
   const existingContainer = docker.getContainer(containerName);
-  const containerExists = existingContainer.modem.host !== undefined;
-  if (containerExists) {
+  try {
     // remove existing container
     const existingContainerData = await existingContainer.inspect();
     if (
@@ -26,6 +25,8 @@ const getContainer = async ({ image, port, containerName, projectName }) => {
     if (existingContainerData) {
       await existingContainer.remove();
     }
+  } catch (e) {
+    console.log('error removing container');
   }
 
   mkdirp.sync(cachePath);
