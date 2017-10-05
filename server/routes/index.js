@@ -64,12 +64,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.use('/api/hooks', require('./api/hooks'));
-
-router.get('/api/deploys', async (req, res) => {
-  const containers = await listContainers();
-  res.send(containers);
-});
+router.use('/api/', require('./api/'));
 
 const { getSubdomain } = require('tldjs');
 
