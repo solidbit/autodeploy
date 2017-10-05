@@ -12,18 +12,20 @@ const DEPLOY_CACHE_ROOT = './deploy-caches/';
 const getContainer = async ({ image, port, containerName, projectName }) => {
   const cachePath = filenamify.path(`${DEPLOY_CACHE_ROOT}${projectName}`);
 
-  // remove existing container
   const existingContainer = docker.getContainer(containerName);
-  const existingContainerData = await existingContainer.inspect();
-
-  if (
-    existingContainerData &&
-    existingContainerData.State.Status === 'running'
-  ) {
-    await existingContainer.stop();
-  }
-  if (existingContainerData) {
-    await existingContainer.remove();
+  const containerExists = existingContainer.modem.host !== undefined;
+  if (containerExists) {
+    // remove existing container
+    const existingContainerData = await existingContainer.inspect();
+    if (
+      existingContainerData &&
+      existingContainerData.State.Status === 'running'
+    ) {
+      await existingContainer.stop();
+    }
+    if (existingContainerData) {
+      await existingContainer.remove();
+    }
   }
 
   mkdirp.sync(cachePath);
