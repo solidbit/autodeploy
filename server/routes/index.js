@@ -25,12 +25,12 @@ const getContainerByName = (containers, name) => {
 const getContainerByHostname = (containers, hostname) => {
   const subdomain = getSubdomain(hostname);
   const potentialContainerName = subdomain && subdomain.split('.')[0];
-  const matchingContaienr = getContainerByName(
+  const matchingContainer = getContainerByName(
     containers,
     potentialContainerName,
   );
 
-  return matchingContaienr;
+  return matchingContainer;
 };
 
 const dockerProxy = proxy(
@@ -40,13 +40,13 @@ const dockerProxy = proxy(
   {
     target: 'http://placeholder/',
     router: req => {
-      const matchingContaienr = getContainerByHostname(
+      const matchingContainer = getContainerByHostname(
         instance.containers,
         req.hostname,
       );
 
-      if (matchingContaienr) {
-        const containerPort = matchingContaienr.id.Ports[0].PublicPort;
+      if (matchingContainer) {
+        const containerPort = matchingContainer.id.Ports[0].PublicPort;
         const proxyTarget = `${req.protocol}://localhost:${containerPort}`;
         console.log(proxyTarget);
         return proxyTarget;
@@ -72,11 +72,11 @@ router.get('/test', async (req, res) => {
   const hostname = req.hostname;
   const subdomain = getSubdomain(hostname);
   const potentialInstanceName = subdomain.split('.')[0];
-  const matchingContaienr = _.find(await listContainers(), x =>
+  const matchingContainer = _.find(await listContainers(), x =>
     x.id.Names.includes(`/${potentialInstanceName}`),
   );
 
-  res.send(matchingContaienr);
+  res.send(matchingContainer);
 });
 
 module.exports = router;
