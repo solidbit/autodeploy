@@ -2,11 +2,11 @@ const Docker = require('dockerode');
 const docker = new Docker();
 
 const execPromise = require('./execPromise');
+const ES_COLLAB = '142.1.177.42';
 
 const runContainer = async (container, branchName) => {
   console.log('executing run script');
-  // const ES_HOST = '142.1.177.42';
-  const ES_HOST = '172.21.47.17';
+  const ES_HOST = process.env.ES_HOST || ES_COLLAB;
   await execPromise(
     container,
     {
