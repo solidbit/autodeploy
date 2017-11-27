@@ -1,9 +1,10 @@
+const slug = require('slug');
 const getContainer = require('./getContainer');
 const setupContainer = require('./setupContainer');
 const runContainer = require('./runContainer');
 
 const deployBranch = async ({ projectName, branchName, dockerImage, port }) => {
-  const containerName = `${branchName}--${projectName}`;
+  const containerName = `${slug(branchName)}--${projectName}`;
   const container = await getContainer({
     image: dockerImage,
     port: port,

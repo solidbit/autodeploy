@@ -3,7 +3,7 @@ const router = express.Router();
 
 const listContainers = require('docker/listContainers');
 
-const projectName = 'gdcapi';
+const projectName = 'overture-ego';
 const hostname = process.env.HOST_NAME || 'deploys.cheapsteak.net';
 router.use('/hooks', require('./hooks'));
 

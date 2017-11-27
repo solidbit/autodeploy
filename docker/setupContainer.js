@@ -6,6 +6,86 @@ const runScript = fs.readFileSync(__dirname + '/run.sh', 'utf8');
 const execPromise = require('./execPromise');
 
 const setupContainer = async (container, branchName) => {
+  // TODO: clone outside the container, copy in, so container doesn't need to install git
+  console.log('install git');
+  await execPromise(
+    container,
+    {
+      Cmd: ['bash', '-c', 'apt-get install git -y'],
+      AttachStdout: true,
+      AttachStderr: true,
+    },
+    {
+      stdout: process.stdout,
+      stderr: process.stderr,
+    },
+  );
+
+  // await execPromise(
+  //   container,
+  //   {
+  //     Cmd: ['bash', '-c', 'apt-get install software-properties-common'],
+  //     AttachStdout: true,
+  //     AttachStderr: true,
+  //   },
+  //   {
+  //     stdout: process.stdout,
+  //     stderr: process.stderr,
+  //   },
+  // );
+
+  // await execPromise(
+  //   container,
+  //   {
+  //     Cmd: ['bash', '-c', 'apt-get install software-properties-common'],
+  //     AttachStdout: true,
+  //     AttachStderr: true,
+  //   },
+  //   {
+  //     stdout: process.stdout,
+  //     stderr: process.stderr,
+  //   },
+  // );
+
+  // await execPromise(
+  //   container,
+  //   {
+  //     Cmd: ['bash', '-c', 'apt-add-repository universe'],
+  //     AttachStdout: true,
+  //     AttachStderr: true,
+  //   },
+  //   {
+  //     stdout: process.stdout,
+  //     stderr: process.stderr,
+  //   },
+  // );
+
+  // await execPromise(
+  //   container,
+  //   {
+  //     Cmd: ['bash', '-c', 'apt-get update'],
+  //     AttachStdout: true,
+  //     AttachStderr: true,
+  //   },
+  //   {
+  //     stdout: process.stdout,
+  //     stderr: process.stderr,
+  //   },
+  // );
+
+  // await execPromise(
+  //   container,
+  //   {
+  //     Cmd: ['bash', '-c', 'apt-get install maven -y'],
+  //     AttachStdout: true,
+  //     AttachStderr: true,
+  //   },
+  //   {
+  //     stdout: process.stdout,
+  //     stderr: process.stderr,
+  //   },
+  // );
+
   console.log('creating /root/.ssh');
   await execPromise(container, { Cmd: ['mkdir', '-p', '/root/.ssh'] });
 

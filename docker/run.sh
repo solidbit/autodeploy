@@ -1,5 +1,6 @@
-echo "running gdcapi"
-source /deploy-cache/virtual-envs/gdcapi/bin/activate
-cd /var/deploy/gdcapi
-echo "GDC_FAKE_AUTH=$GDC_FAKE_AUTH GDC_API_PORT=$GDC_API_PORT GDC_FAKE_DOWNLOAD=$GDC_FAKE_DOWNLOAD GDC_ES_HOST=$GDC_ES_HOST GDC_API_HOST=$GDC_API_HOST ES_CASE_INDEX=$ES_CASE_INDEX ES_GENE_INDEX=$ES_GENE_INDEX ES_SSM_INDEX=$ES_SSM_INDEX ES_SSM_OCC_INDEX=$ES_SSM_OCC_INDEX GDC_ES_INDEX=$GDC_ES_INDEX"
-python run.py
+cd /var/deploy/overture
+
+export SPRING_DATASOURCE_URL=
+export SPRING_DATASOURCE_USERNAME=
+export SPRING_DATASOURCE_PASSWORD=
+mvn spring-boot:run

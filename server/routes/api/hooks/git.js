@@ -4,7 +4,7 @@ const router = express.Router();
 const GITHUB_EVENTS = require('./constants/GITHUB_EVENTS');
 const deployBranch = require('docker/deployBranch.js');
 
-const projectName = 'gdcapi';
+const projectName = 'overture-ego';
 const acceptedGithubEvents = [GITHUB_EVENTS.push, GITHUB_EVENTS.pull_request];
 
 router

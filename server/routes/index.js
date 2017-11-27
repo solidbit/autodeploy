@@ -35,6 +35,10 @@ const getContainerByHostname = (containers, hostname) => {
 
 const dockerProxy = proxy(
   (pathname, req) => {
+    console.log(
+      'getContainerByHostname(instance.containers, req.hostname)',
+      getContainerByHostname(instance.containers, req.hostname),
+    );
     return !!getContainerByHostname(instance.containers, req.hostname);
   },
   {

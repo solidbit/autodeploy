@@ -19,13 +19,22 @@
 //   await runContainer(container);
 // })();
 
+const pull = require('./pull');
+
 const deployBranch = require('./deployBranch');
 
+process.on('unhandledRejection', error => console.log('error', error.stack));
+
+const image = 'maven:3.5.2-ibmjava-8';
+// const image = 'openjdk:8u151-jdk';
+
 (async () => {
+  // await pull(image);
+
   deployBranch({
-    projectName: 'gdcapi',
-    branchName: '1655-tar-stream-rest',
-    dockerImage: 'python:2.7.14',
-    port: '5000',
+    projectName: 'overture-ego',
+    branchName: 'feature/last-login-time',
+    dockerImage: image,
+    port: '8081',
   });
 })();

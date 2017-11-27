@@ -26,7 +26,7 @@ const getContainer = async ({ image, port, containerName, projectName }) => {
       await existingContainer.remove();
     }
   } catch (e) {
-    console.log('error removing container');
+    console.log('error removing container', e);
   }
 
   mkdirp.sync(cachePath);
