@@ -40,5 +40,6 @@
   "status",
   "team",
   "team_add",
-  "watch"
+  "watch",
+  "ping"
 ]
