@@ -4,7 +4,6 @@ const router = express.Router();
 const GITHUB_EVENTS = require('./constants/GITHUB_EVENTS');
 const deployBranch = require('docker/deployBranch.js');
 
-const projectName = 'gdcapi';
 const acceptedGithubEvents = [GITHUB_EVENTS.push, GITHUB_EVENTS.pull_request];
 
 router
@@ -24,15 +23,10 @@ router
     if (githubEvent === GITHUB_EVENTS.push) {
       console.log('push received');
       const branch = _.last(req.body.ref.toString().split('/'));
-      deployBranch({
-        projectName: projectName,
-        branchName: branch,
-        dockerImage: 'python:2.7.14',
-        port: '5000',
-      });
+      const { repository: { name, owner: { name: owner } } } = req.body;
+      deployBranch({ owner, name, branch });
       res.send({});
     }
-    // res.send({});
   });
 
 module.exports = router;

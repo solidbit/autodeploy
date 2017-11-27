@@ -61,3 +61,5 @@ sshkey
 sshkey.pub
 
 deploy-caches
+
+repos

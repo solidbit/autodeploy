@@ -18,6 +18,7 @@
     "filenamify": "^2.0.0",
     "http-proxy-middleware": "^0.17.4",
     "mkdirp": "^0.5.1",
+    "mkdirp-promise": "^5.0.1",
     "morgan": "~1.8.1",
     "portfinder": "^1.0.13",
     "pug": "~2.0.0-beta11",

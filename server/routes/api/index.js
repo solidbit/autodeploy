@@ -4,7 +4,7 @@ const router = express.Router();
 const listContainers = require('docker/listContainers');
 
 const projectName = 'gdcapi';
-const hostname = process.env.HOST_NAME || 'deploys.cheapsteak.net';
+const hostname = process.env.HOST_NAME || 'localhost:3000';
 router.use('/hooks', require('./hooks'));
 
 router.get('/containers', async (req, res) => {
