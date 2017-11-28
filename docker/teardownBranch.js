@@ -4,12 +4,12 @@ const mkdirp = require('mkdirp-promise');
 const { getComposeProjectName } = require('utils/docker');
 portfinder.basePort = 30000;
 
-const deployBranch = async ({ owner, name, branch }) => {
+const teardownBranch = async ({ owner, name, branch }) => {
   const apiPort = await portfinder.getPortPromise();
   await mkdirp(`./repos/${owner}`);
 
   const composeProjectName = getComposeProjectName({ owner, name, branch });
-  return spawn(`./docker/setup.sh`, {
+  return spawn(`./docker/teardown.sh`, {
     cdw: './',
     env: {
       API_HOST_PORT: apiPort,
@@ -21,4 +21,4 @@ const deployBranch = async ({ owner, name, branch }) => {
   });
 };
 
-module.exports = deployBranch;
+module.exports = teardownBranch;
