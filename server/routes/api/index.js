@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const { getPreviewLink } = require('utils/docker');
 
 const listContainers = require('docker/listContainers');
 
-const hostname = process.env.HOST_NAME || 'localhost:3000';
 router.use('/hooks', require('./hooks'));
 
 router.get('/containers', async (req, res) => {
@@ -19,9 +19,7 @@ router.get('/deploys', async (req, res) => {
       return {
         status: container.id.Status,
         state: container.id.State,
-        url: process.env.USE_SUBDOMAIN
-          ? `http://${container.id.Names[0].slice(1)}.${hostname}`
-          : `http://${hostname}/preview/${container.id.Names[0].slice(1)}`,
+        url: getPreviewLink({ containerName: container.id.Names[0].slice(1) }),
       };
     });
   res.send(containerInfo);
