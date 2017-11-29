@@ -33,7 +33,11 @@ router
         ref,
         repository: { name, owner: { name: owner } },
       } = req.body;
-      const branch = _.last(ref.toString().split('/'));
+      const branch = ref
+        .toString()
+        .split('/')
+        .slice(2)
+        .join('/');
       if (deleted) {
         console.log('delete received');
         teardownBranch({ owner, name, branch });
