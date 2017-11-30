@@ -1,3 +1,5 @@
+# Use the openjdk base image instead of the maven until https://github.com/carlossg/docker-maven/pull/57 is merged.
+# `VOLUME "$USER_HOME_DIR/.m2"` breaks pre downloading dependencies
 FROM openjdk:8u121-jdk-alpine
 
 ARG MAVEN_VERSION=3.5.2
