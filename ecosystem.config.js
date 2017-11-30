@@ -3,7 +3,7 @@ const os = require('os');
 module.exports = {
   apps: [
     {
-      name: 'persona',
+      name: 'autodeploy',
       script: 'npm',
       args: 'start',
       watch: true,
